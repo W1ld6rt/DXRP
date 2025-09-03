@@ -1,0 +1,323 @@
+<!-- ========== SONGS COMPONENT ========== -->
+<div class="songs-component">
+    <!-- Song Library Sidebar -->
+    <aside class="songs-sidebar">
+        <div class="sidebar-header">
+            <h2>Song Library</h2>
+            <button class="icon-button" id="add-song-btn" title="Add New Song">
+                <span class="material-symbols-rounded">add</span>
+            </button>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <span class="material-symbols-rounded search-icon">search</span>
+                <input type="text" id="song-search" placeholder="Search songs..." class="search-input" autocomplete="off">
+                <button class="clear-search-btn" id="clear-search-btn" style="display: none;">
+                    <span class="material-symbols-rounded">close</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Song List -->
+        <div class="song-list" id="song-list">
+            <!-- Songs will be loaded here -->
+            <div class="empty-song-list" id="songs-empty-state">
+                <span class="material-symbols-rounded">queue_music</span>
+                <p>No songs available</p>
+                <button class="btn btn-primary" id="import-songs-btn">
+                    <span class="material-symbols-rounded">upload</span>
+                    Import Songs
+                </button>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <main class="songs-main">
+        <!-- Song Editor/Viewer -->
+        <div class="song-editor" id="song-editor" style="display: none;">
+            <div class="editor-header">
+                <div class="song-info">
+                    <h1 id="song-title">Song Title</h1>
+                    <p id="song-artist">Artist Name</p>
+                </div>
+                <div class="editor-actions">
+                    <button class="btn btn-secondary" id="edit-song-btn">
+                        <span class="material-symbols-rounded">edit</span>
+                        Edit
+                    </button>
+                    <button class="btn btn-primary" id="save-song-btn" style="display: none;">
+                        <span class="material-symbols-rounded">save</span>
+                        Save
+                    </button>
+                    <button class="btn btn-danger" id="delete-song-btn">
+                        <span class="material-symbols-rounded">delete</span>
+                        Delete
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ChordPro Content -->
+            <div class="chordpro-container">
+                <div class="chordpro-toolbar">
+                    <button class="toolbar-btn" id="preview-mode-btn" title="Preview Mode">
+                        <span class="material-symbols-rounded">visibility</span>
+                    </button>
+                    <button class="toolbar-btn" id="edit-mode-btn" title="Edit Mode">
+                        <span class="material-symbols-rounded">edit_note</span>
+                    </button>
+                    <div class="toolbar-separator"></div>
+                    <button class="toolbar-btn" id="insert-verse-btn" title="Insert Verse">
+                        <span class="material-symbols-rounded">format_list_numbered</span>
+                    </button>
+                    <button class="toolbar-btn" id="insert-chorus-btn" title="Insert Chorus">
+                        <span class="material-symbols-rounded">repeat</span>
+                    </button>
+                    <button class="toolbar-btn" id="insert-bridge-btn" title="Insert Bridge">
+                        <span class="material-symbols-rounded">alt_route</span>
+                    </button>
+                    <div class="toolbar-separator"></div>
+                    <button class="toolbar-btn" id="format-chords-btn" title="Format Chords">
+                        <span class="material-symbols-rounded">music_note</span>
+                    </button>
+                    <button class="toolbar-btn" id="transpose-up-btn" title="Transpose Up">
+                        <span class="material-symbols-rounded">keyboard_arrow_up</span>
+                    </button>
+                    <button class="toolbar-btn" id="transpose-down-btn" title="Transpose Down">
+                        <span class="material-symbols-rounded">keyboard_arrow_down</span>
+                    </button>
+                    <div class="toolbar-separator"></div>
+                    <div class="song-metadata" id="song-metadata" style="display: none;">
+                        <div class="metadata-item" id="current-key-display">
+                            <span class="material-symbols-rounded">music_note</span>
+                            <span class="key-indicator" id="key-indicator">-</span>
+                        </div>
+                        <div class="metadata-item" id="current-tempo-display" style="display: none;">
+                            <span class="material-symbols-rounded">speed</span>
+                            <span class="tempo-indicator" id="tempo-indicator">- BPM</span>
+                        </div>
+                    </div>
+                    <div class="toolbar-separator"></div>
+                    <button class="toolbar-btn" id="add-slide-btn" title="Add Slide">
+                        <span class="material-symbols-rounded">slideshow</span>
+                    </button>
+                    <button class="toolbar-btn" id="clear-content-btn" title="Clear Content">
+                        <span class="material-symbols-rounded">clear_all</span>
+                    </button>
+                </div>
+                
+                <div class="chordpro-content">
+                    <textarea id="chordpro-text" placeholder="Enter ChordPro content here...&#10;&#10;Example:&#10;[C]Amazing [G]grace, how [F]sweet the [C]sound&#10;That [F]saved a [C]wretch like [G]me..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide Management -->
+        <div class="slide-management" id="slide-management" style="display: none;">
+            <div class="slides-header">
+                <h2>Slides</h2>
+                <div class="slides-actions">
+                    <button class="btn btn-secondary" id="auto-slides-btn">
+                        <span class="material-symbols-rounded">auto_fix_high</span>
+                        Auto Slides
+                    </button>
+                    <button class="btn btn-secondary" id="arrange-slides-btn">
+                        <span class="material-symbols-rounded">reorder</span>
+                        Arrange
+                    </button>
+                    <button class="btn btn-secondary" id="template-settings-btn">
+                        <span class="material-symbols-rounded">palette</span>
+                        Templates
+                    </button>
+                    <button class="btn btn-primary" id="add-slide-manual-btn">
+                        <span class="material-symbols-rounded">add</span>
+                        Add Slide
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Template Selector -->
+            <div class="template-selector" id="template-selector" style="display: none;">
+                <label>Slide Template:</label>
+                <div class="template-options" id="template-options">
+                    <div class="template-option active" data-template="classic">
+                        <div class="template-name">Classic</div>
+                        <div class="template-description">Traditional chord-over-lyrics format</div>
+                        <div class="template-preview">
+                            <div class="slide-line">
+                                <span class="chords">[C] [G]</span><br>
+                                <span class="lyrics">Amazing grace</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="template-option" data-template="compact">
+                        <div class="template-name">Compact</div>
+                        <div class="template-description">Inline chords with lyrics</div>
+                        <div class="template-preview">
+                            <div class="slide-line">
+                                <span class="chords">[C]</span> <span class="lyrics">Amazing</span> <span class="chords">[G]</span> <span class="lyrics">grace</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="template-option" data-template="large">
+                        <div class="template-name">Large Text</div>
+                        <div class="template-description">Large fonts for projection</div>
+                        <div class="template-preview">
+                            <div class="slide-line">
+                                <span class="chords">[C] [G]</span><br>
+                                <span class="lyrics">Amazing grace</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="template-option" data-template="minimal">
+                        <div class="template-name">Lyrics Only</div>
+                        <div class="template-description">Hide chords, show only lyrics</div>
+                        <div class="template-preview">
+                            <div class="slide-line">
+                                <span class="lyrics">Amazing grace</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slides-container" id="slides-container">
+                <!-- Slides will be generated here -->
+            </div>
+        </div>
+        
+        <!-- Empty State -->
+        <div class="songs-empty-state" id="songs-empty-state">
+            <div class="empty-state">
+                <span class="material-symbols-rounded">queue_music</span>
+                <h1>Song Library</h1>
+                <p>Select a song from the library or create a new one to get started</p>
+                <button class="btn btn-primary" id="create-song-btn">
+                    <span class="material-symbols-rounded">add</span>
+                    Create New Song
+                </button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- ========== MODALS ========== -->
+<!-- Add/Edit Song Modal -->
+<div class="modal" id="song-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modal-title">Add New Song</h2>
+            <button class="modal-close" id="close-song-modal">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="song-form">
+                <div class="form-group">
+                    <label for="modal-song-title">Title</label>
+                    <input type="text" id="modal-song-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-song-artist">Artist</label>
+                    <input type="text" id="modal-song-artist">
+                </div>
+                <div class="form-group">
+                    <label for="modal-song-key">Key</label>
+                    <div class="key-controls">
+                        <select id="modal-song-key">
+                            <option value="">Select Key</option>
+                            <option value="C">C</option>
+                            <option value="C#">C#</option>
+                            <option value="Db">Db</option>
+                            <option value="D">D</option>
+                            <option value="D#">D#</option>
+                            <option value="Eb">Eb</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="F#">F#</option>
+                            <option value="Gb">Gb</option>
+                            <option value="G">G</option>
+                            <option value="G#">G#</option>
+                            <option value="Ab">Ab</option>
+                            <option value="A">A</option>
+                            <option value="A#">A#</option>
+                            <option value="Bb">Bb</option>
+                            <option value="B">B</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" id="transpose-to-key-btn" title="Transpose to selected key">
+                            <span class="material-symbols-rounded">music_note</span>
+                            Transpose
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="modal-song-tempo">Tempo (BPM)</label>
+                    <input type="number" id="modal-song-tempo" min="40" max="200" placeholder="120">
+                </div>
+                <div class="form-group">
+                    <label for="modal-song-chordpro">ChordPro Content</label>
+                    <textarea id="modal-song-chordpro" rows="10" placeholder="Enter ChordPro content..."></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-song-modal">Cancel</button>
+            <button class="btn btn-primary" id="save-song-modal">Save Song</button>
+        </div>
+    </div>
+</div>
+
+<!-- Import Songs Modal -->
+<div class="modal" id="import-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Import Songs</h2>
+            <button class="modal-close" id="close-import-modal">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="import-options">
+                <div class="import-option">
+                    <h3>Upload Song Files</h3>
+                    <p>Select one or more .pro or .txt files to import</p>
+                    <input type="file" id="PRO-files" multiple accept=".pro,.txt,.chord,.chordpro">
+                </div>
+                <div class="import-option">
+                    <h3>Load from Server Projects</h3>
+                    <p>Load .PRO files from the server projects directory</p>
+                    <div class="server-files-section">
+                        <button type="button" id="load-server-files-btn" class="btn btn-outline">
+                            <span class="material-symbols-rounded">folder_open</span>
+                            Load Available Files
+                        </button>
+                        <div id="server-files-list" class="server-files-list" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="import-option">
+                    <h3>Import from SongSelect</h3>
+                    <p>Search and import songs from SongSelect database (simulated)</p>
+                    <div class="songselect-search">
+                        <input type="text" id="songselect-search" placeholder="Search for songs..." class="search-input">
+                        <button type="button" id="songselect-search-btn" class="btn btn-outline">
+                            <span class="material-symbols-rounded">search</span>
+                            Search
+                        </button>
+                    </div>
+                    <div id="songselect-results" class="songselect-results" style="display: none;"></div>
+                </div>
+                <div class="import-option">
+                    <h3>Paste ChordPro Content</h3>
+                    <p>Paste ChordPro content directly</p>
+                    <textarea id="paste-chordpro" placeholder="Paste ChordPro content here..."></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-import-modal">Cancel</button>
+            <button class="btn btn-primary" id="import-songs-modal">Import</button>
+        </div>
+    </div>
+</div>

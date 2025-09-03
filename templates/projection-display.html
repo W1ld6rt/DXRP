@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <title>DXPR - Proyección Biblia</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+    <style>
+        /* ====== DXPR PROJECTION STYLES ====== */
+        :root {
+            --projection-bg: transparent;
+            --projection-text: #ffffff;
+            --projection-text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --projection-accent: #3b82f6;
+            --projection-muted: rgba(255, 255, 255, 0.8);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--projection-bg);
+            color: var(--projection-text);
+        }
+        
+        .projection-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .verse-reference {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 700;
+            color: var(--projection-accent);
+            text-shadow: var(--projection-text-shadow);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+        
+        .verse-text {
+            font-size: clamp(1.5rem, 6vw, 3rem);
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 90vw;
+            text-shadow: var(--projection-text-shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .verse-text.highlight {
+            background: linear-gradient(120deg, var(--projection-accent) 0%, transparent 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+        
+        .verse-number {
+            font-size: clamp(1rem, 4vw, 2rem);
+            font-weight: 600;
+            color: var(--projection-accent);
+            margin-right: 0.5rem;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: var(--projection-muted);
+            text-align: center;
+        }
+        
+        .empty-state .material-symbols-rounded {
+            font-size: clamp(4rem, 15vw, 8rem);
+            margin-bottom: 2rem;
+            opacity: 0.5;
+        }
+        
+        .empty-state h1 {
+            font-size: clamp(1.5rem, 6vw, 3rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .empty-state p {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            opacity: 0.8;
+        }
+        
+        .secondary-verse {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: clamp(1rem, 4vw, 2rem);
+            opacity: 0.8;
+        }
+        
+        .secondary-reference {
+            font-size: clamp(0.875rem, 3vw, 1.5rem);
+            color: var(--projection-muted);
+            margin-bottom: 1rem;
+        }
+        
+        /* Animation for verse appearance */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .verse-content {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .projection-container {
+                padding: 1rem;
+            }
+            
+            .verse-reference {
+                margin-bottom: 1.5rem;
+            }
+            
+            .verse-text {
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .projection-container {
+                height: auto;
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="projection-container">
+        <div class="verse-content" id="verse-content">
+            <div class="empty-state">
+                <span class="material-symbols-rounded">menu_book</span>
+                <h1>DXPR - Proyección Biblia</h1>
+                <p>Esperando selección de versículo...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====== BIBLE PROJECTION SCRIPT ======
+        
+        const socket = io();
+        const verseContent = document.getElementById('verse-content');
+        
+        let currentVerse = null;
+        let showSecondary = false;
+        
+        // Socket event listeners
+        socket.on('versiculo', async (data) => {
+            currentVerse = data;
+            await displayVerse(data);
+        });
+        
+        socket.on('ui_set_display_hidden', (data) => {
+            if (data.hidden) {
+                showEmptyState();
+            } else if (currentVerse) {
+                displayVerse(currentVerse);
+            }
+        });
+        
+        socket.on('ui_estado', (state) => {
+            if (state.display_hidden) {
+                showEmptyState();
+            }
+        });
+        
+        // Request initial state
+        socket.emit('ui_pedir_estado');
+        
+        async function displayVerse(data) {
+            try {
+                // Fetch verse content
+                const response = await fetch(`/api/versiculo/${data.b}/${data.c}/${data.vers[0]}`);
+                const verseData = await response.json();
+                
+                if (!verseData || (!verseData.it && !verseData.es)) {
+                    showEmptyState();
+                    return;
+                }
+                
+                const text = verseData.it || verseData.es;
+                const reference = `${data.n} ${data.c}:${data.vers[0]}`;
+                
+                // Create verse HTML
+                const verseHTML = `
+                    <div class="verse-reference">${reference}</div>
+                    <div class="verse-text">
+                        <span class="verse-number">${data.vers[0]}.</span>
+                        ${text}
+                    </div>
+                `;
+                
+                // Add secondary verse if enabled
+                if (showSecondary && verseData.es && verseData.it) {
+                    const secondaryText = verseData.es === text ? verseData.it : verseData.es;
+                    const secondaryReference = `${data.n} ${data.c}:${data.vers[0]} (${verseData.es === text ? 'NR94' : 'RV60'})`;
+                    
+                    verseHTML += `
+                        <div class="secondary-verse">
+                            <div class="secondary-reference">${secondaryReference}</div>
+                            <div class="verse-text">
+                                <span class="verse-number">${data.vers[0]}.</span>
+                                ${secondaryText}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                verseContent.innerHTML = verseHTML;
+                
+            } catch (error) {
+                console.error('Error displaying verse:', error);
+                showEmptyState();
+            }
+        }
+        
+        function showEmptyState() {
+            verseContent.innerHTML = `
+                <div class="empty-state">
+                    <span class="material-symbols-rounded">menu_book</span>
+                    <h1>DXPR - Proyección Biblia</h1>
+                    <p>Esperando selección de versículo...</p>
+                </div>
+            `;
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Recalculate font sizes if needed
+        });
+        
+        // Handle fullscreen
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+        
+        // Auto-hide cursor after inactivity
+        let cursorTimeout;
+        function hideCursor() {
+            document.body.style.cursor = 'none';
+        }
+        
+        function showCursor() {
+            document.body.style.cursor = 'default';
+            clearTimeout(cursorTimeout);
+            cursorTimeout = setTimeout(hideCursor, 3000);
+        }
+        
+        document.addEventListener('mousemove', showCursor);
+        document.addEventListener('click', showCursor);
+        
+        // Initialize
+        hideCursor();
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lower Third</title>
+<style>
+  body { margin:0; background:transparent; overflow:hidden; }
+
+  #lower-third{
+    position: fixed;
+    bottom: 5%;
+    left: -100%;
+    padding: 15px 30px;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #1a1b21;
+    border-left: 10px solid #dce2f9;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    transition: left .5s ease-in-out, opacity .3s ease-in-out;
+    will-change: left, opacity;
+    opacity: 0;
+    z-index: 2000;
+    pointer-events: none;
+    text-transform: capitalize; /* opcional */
+  }
+
+  #lower-third.show{
+    left: 5%;
+    opacity: 1;
+  }
+</style>
+
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+  <div id="lower-third"></div>
+
+<script>
+  const socket = io();
+  const lower = document.getElementById('lower-third');
+
+  let hideTimer = null;
+
+  function showLowerThirdTemporarily(html) {
+    // limpia cualquier temporizador previo
+    if (hideTimer) {
+      clearTimeout(hideTimer);
+      hideTimer = null;
+    }
+
+    lower.innerHTML = html;
+    lower.classList.add('show');               // entra desde la izquierda
+
+    // ⏱️ Ocultar a los 5 segundos con la misma transición (desliza hacia la izquierda)
+    hideTimer = setTimeout(() => {
+      lower.classList.remove('show');          // vuelve a left:-100%
+      hideTimer = null;
+    }, 8000);
+  }
+
+  // Mostrar lower-third cuando llega "ajustar"
+  socket.on('ajustar', (data) => {
+    const html = (Array.isArray(data) ? data : [data])
+      .filter(p => p && (p.name || p.role))
+      .map(p => `<div>${p.name || ''}<br><span style="font-size:0.6em; font-weight: normal;">${p.role || ''}</span></div>`)
+      .join('<hr style="border:none; border-top:1px solid #ffd700;">');
+
+    showLowerThirdTemporarily(html);
+  });
+
+  // Ocultar si llega un versículo o un "ocultar" global
+  socket.on('versiculo', () => {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    lower.classList.remove('show');
+  });
+
+  socket.on('ocultar', () => {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    lower.classList.remove('show');
+  });
+</script>
+
+</body>
+</html>

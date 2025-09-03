@@ -1,0 +1,531 @@
+<!-- ========== SETTINGS COMPONENT ========== -->
+<div class="settings-component">
+    <!-- Settings Navigation -->
+    <aside class="settings-sidebar">
+        <div class="sidebar-header">
+            <h2>Settings</h2>
+        </div>
+        
+        <nav class="settings-nav">
+            <button class="nav-item active" data-section="obs">
+                <span class="material-symbols-rounded">cast</span>
+                OBS Connection
+            </button>
+            <button class="nav-item" data-section="projection">
+                <span class="material-symbols-rounded">link</span>
+                Projection Links
+            </button>
+            <button class="nav-item" data-section="appearance">
+                <span class="material-symbols-rounded">palette</span>
+                Appearance
+            </button>
+            <button class="nav-item" data-section="bible">
+                <span class="material-symbols-rounded">menu_book</span>
+                Bible Settings
+            </button>
+            <button class="nav-item" data-section="songs">
+                <span class="material-symbols-rounded">queue_music</span>
+                Songs Management
+            </button>
+            <button class="nav-item" data-section="about">
+                <span class="material-symbols-rounded">info</span>
+                About
+            </button>
+        </nav>
+    </aside>
+    
+    <!-- Settings Content -->
+    <main class="settings-main">
+        <!-- OBS Connection Section -->
+        <section class="settings-section active" id="obs-section">
+            <div class="section-header">
+                <h1>OBS Studio Connection</h1>
+                <p>Configure connection to OBS Studio for live streaming and scene control</p>
+            </div>
+            
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3>Connection Settings</h3>
+                    
+                    <div class="form-group">
+                        <label for="obs-host">OBS Host</label>
+                        <input type="text" id="obs-host" value="localhost" placeholder="localhost">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="obs-port">OBS Port</label>
+                        <input type="number" id="obs-port" value="4444" placeholder="4444">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="obs-password">OBS Password (optional)</label>
+                        <input type="password" id="obs-password" placeholder="Enter password if required">
+                    </div>
+                    
+                    <div class="connection-status">
+                        <div class="status-indicator" id="obs-status-indicator">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Disconnected</span>
+                        </div>
+                        <button class="btn btn-primary" id="test-obs-connection">
+                            <span class="material-symbols-rounded">wifi</span>
+                            Test Connection
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Scene Management</h3>
+                    
+                    <div class="scene-list" id="scene-list">
+                        <div class="empty-scenes">
+                            <span class="material-symbols-rounded">slideshow</span>
+                            <p>No scenes available</p>
+                            <p>Connect to OBS to see available scenes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projection Links Section -->
+        <section class="settings-section" id="projection-section">
+            <div class="section-header">
+                <h1>Projection Links</h1>
+                <p>Copy these URLs to use as Browser Sources in OBS Studio</p>
+            </div>
+            
+            <div class="settings-content">
+                <div class="projection-links">
+                    <div class="link-item">
+                        <div class="link-info">
+                            <h3>Bible Projection</h3>
+                            <p>Display Bible verses and navigation</p>
+                        </div>
+                        <div class="link-controls">
+                            <input type="text" id="bible-link" value="http://localhost:5000/bibbia" readonly>
+                            <button class="btn btn-secondary copy-btn" data-link="bible-link">
+                                <span class="material-symbols-rounded">content_copy</span>
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-info">
+                            <h3>Songs Projection</h3>
+                            <p>Display song lyrics and slides</p>
+                        </div>
+                        <div class="link-controls">
+                            <input type="text" id="songs-link" value="http://localhost:5000/canti" readonly>
+                            <button class="btn btn-secondary copy-btn" data-link="songs-link">
+                                <span class="material-symbols-rounded">content_copy</span>
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-info">
+                            <h3>Lower Third Projection</h3>
+                            <p>Display lower third graphics</p>
+                        </div>
+                        <div class="link-controls">
+                            <input type="text" id="lower-third-link" value="http://localhost:5000/sottopancia" readonly>
+                            <button class="btn btn-secondary copy-btn" data-link="lower-third-link">
+                                <span class="material-symbols-rounded">content_copy</span>
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Browser Source Settings</h3>
+                    <p>Recommended settings for OBS Browser Sources:</p>
+                    <ul class="settings-list">
+                        <li><strong>Width:</strong> 1920px</li>
+                        <li><strong>Height:</strong> 1080px</li>
+                        <li><strong>CSS:</strong> body { margin: 0; padding: 0; }</li>
+                        <li><strong>Refresh:</strong> Disabled (refresh manually when needed)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Appearance Section -->
+        <section class="settings-section" id="appearance-section">
+            <div class="section-header">
+                <h1>Appearance</h1>
+                <p>Customize the look and feel of the application</p>
+            </div>
+            
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3>Theme</h3>
+                    
+                    <div class="theme-options">
+                        <button class="theme-btn active" data-theme="auto">
+                            <span class="material-symbols-rounded">brightness_auto</span>
+                            <span>Auto</span>
+                            <small>Follow system</small>
+                        </button>
+                        <button class="theme-btn" data-theme="light">
+                            <span class="material-symbols-rounded">light_mode</span>
+                            <span>Light</span>
+                            <small>Light theme</small>
+                        </button>
+                        <button class="theme-btn" data-theme="dark">
+                            <span class="material-symbols-rounded">dark_mode</span>
+                            <span>Dark</span>
+                            <small>Dark theme</small>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Accent Color</h3>
+                    
+                    <div class="color-options">
+                        <button class="color-btn active" data-color="blue" style="--accent-color: #2196F3;">
+                            <div class="color-preview"></div>
+                            <span>Blue</span>
+                        </button>
+                        <button class="color-btn" data-color="green" style="--accent-color: #4CAF50;">
+                            <div class="color-preview"></div>
+                            <span>Green</span>
+                        </button>
+                        <button class="color-btn" data-color="purple" style="--accent-color: #9C27B0;">
+                            <div class="color-preview"></div>
+                            <span>Purple</span>
+                        </button>
+                        <button class="color-btn" data-color="orange" style="--accent-color: #FF9800;">
+                            <div class="color-preview"></div>
+                            <span>Orange</span>
+                        </button>
+                        <button class="color-btn" data-color="red" style="--accent-color: #F44336;">
+                            <div class="color-preview"></div>
+                            <span>Red</span>
+                        </button>
+                        <button class="color-btn" data-color="teal" style="--accent-color: #009688;">
+                            <div class="color-preview"></div>
+                            <span>Teal</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Display Settings</h3>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="compact-mode">
+                            <span class="checkmark"></span>
+                            Compact Mode
+                            <small>Reduce spacing and padding for smaller screens</small>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="animations-enabled" checked>
+                            <span class="checkmark"></span>
+                            Enable Animations
+                            <small>Show smooth transitions and animations</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Bible Settings Section -->
+        <section class="settings-section" id="bible-section">
+            <div class="section-header">
+                <h1>Bible Settings</h1>
+                <p>Load Zefania XML files and configure Bible translations</p>
+            </div>
+            
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3>Load Bible Files</h3>
+                    <p class="setting-description">Upload Zefania XML format Bible files to add new translations</p>
+                    
+                    <div class="form-group">
+                        <label for="bible-file-input" class="file-input-label">
+                            <span class="material-symbols-rounded">upload_file</span>
+                            Choose Zefania XML File
+                            <input type="file" id="bible-file-input" accept=".xml" multiple style="display: none;">
+                        </label>
+                        <small>Supported format: Zefania XML (.xml)</small>
+                    </div>
+                    
+                    <div id="upload-progress" class="upload-progress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span class="progress-text" id="progress-text">Uploading...</span>
+                    </div>
+                    
+                    <div id="upload-status" class="upload-status"></div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Installed Bibles</h3>
+                    <div id="installed-bibles" class="installed-bibles">
+                        <div class="bible-item default-bible">
+                            <div class="bible-info">
+                                <span class="bible-name">Reina Valera 1960</span>
+                                <span class="bible-code">RV60</span>
+                            </div>
+                            <span class="bible-status default">Default</span>
+                        </div>
+                        <div class="bible-item default-bible">
+                            <div class="bible-info">
+                                <span class="bible-name">Nueva Reina Valera</span>
+                                <span class="bible-code">NR94</span>
+                            </div>
+                            <span class="bible-status default">Default</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Bible Selection</h3>
+                    
+                    <div class="form-group">
+                        <label for="primary-bible">Primary Bible</label>
+                        <select id="primary-bible">
+                            <option value="RV60" selected>Reina Valera 1960 (RV60)</option>
+                            <option value="NR94">Nueva Reina Valera (NR94)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="secondary-bible">Secondary Bible</label>
+                        <select id="secondary-bible">
+                            <option value="" selected>None</option>
+                            <option value="RV60">Reina Valera 1960 (RV60)</option>
+                            <option value="NR94">Nueva Reina Valera (NR94)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button id="apply-bible-changes" class="apply-btn">
+                            <span class="material-symbols-rounded">check</span>
+                            Apply Bible Changes
+                        </button>
+                        <small>Apply the selected Bible configuration to the Bible section</small>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Display Options</h3>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="show-verse-numbers" checked>
+                            <span class="checkmark"></span>
+                            Show Verse Numbers
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="show-chapter-numbers" checked>
+                            <span class="checkmark"></span>
+                            Show Chapter Numbers
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="show-secondary-bible">
+                            <span class="checkmark"></span>
+                            Show Secondary Bible
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>History Management</h3>
+                    
+                    <div class="form-group">
+                        <label for="history-limit">History Limit</label>
+                        <select id="history-limit">
+                            <option value="10">10 verses</option>
+                            <option value="25" selected>25 verses</option>
+                            <option value="50">50 verses</option>
+                            <option value="100">100 verses</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-secondary" id="clear-bible-history">
+                        <span class="material-symbols-rounded">clear_all</span>
+                        Clear History
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Songs Management Section -->
+        <section class="settings-section" id="songs-section">
+            <div class="section-header">
+                <h1>Songs Management</h1>
+                <p>Manage your song library and import settings</p>
+            </div>
+            
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3>Library Management</h3>
+                    
+                    <div class="library-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="total-songs">0</span>
+                            <span class="stat-label">Total Songs</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="total-slides">0</span>
+                            <span class="stat-label">Total Slides</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="library-size">0 KB</span>
+                            <span class="stat-label">Library Size</span>
+                        </div>
+                    </div>
+                    
+                    <div class="management-actions">
+                        <button class="btn btn-primary" id="export-songs">
+                            <span class="material-symbols-rounded">download</span>
+                            Export Library
+                        </button>
+                        <button class="btn btn-secondary" id="import-songs-settings">
+                            <span class="material-symbols-rounded">upload</span>
+                            Import Songs
+                        </button>
+                        <button class="btn btn-danger" id="clear-songs-library">
+                            <span class="material-symbols-rounded">delete_forever</span>
+                            Clear Library
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Display Settings</h3>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="show-chords" checked>
+                            <span class="checkmark"></span>
+                            Show Chords
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="show-slide-numbers" checked>
+                            <span class="checkmark"></span>
+                            Show Slide Numbers
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="default-font-size">Default Font Size</label>
+                        <select id="default-font-size">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                            <option value="xlarge">Extra Large</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="settings-section" id="about-section">
+            <div class="section-header">
+                <h1>About DXPR</h1>
+                <p>Dexter Presenter Remote - Professional presentation control system</p>
+            </div>
+            
+            <div class="settings-content">
+                <div class="about-info">
+                    <div class="app-logo">
+                        <span class="material-symbols-rounded">cast</span>
+                    </div>
+                    
+                    <div class="app-details">
+                        <h2>DXPR v1.0.0</h2>
+                        <p>A comprehensive presentation control system designed for live streaming and professional presentations.</p>
+                        
+                        <div class="feature-list">
+                            <h3>Features</h3>
+                            <ul>
+                                <li>OBS Studio Integration</li>
+                                <li>Bible Navigation & Projection</li>
+                                <li>Song Management with ChordPro Support</li>
+                                <li>Lower Third Graphics</li>
+                                <li>Real-time Streaming Control</li>
+                                <li>Responsive Design</li>
+                                <li>Material Design 3 UI</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tech-stack">
+                            <h3>Technology Stack</h3>
+                            <ul>
+                                <li><strong>Backend:</strong> Python Flask</li>
+                                <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript</li>
+                                <li><strong>Real-time:</strong> Socket.IO</li>
+                                <li><strong>Design:</strong> Material Design 3</li>
+                                <li><strong>OBS Integration:</strong> WebSocket API</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>System Information</h3>
+                    
+                    <div class="system-info">
+                        <div class="info-item">
+                            <span class="info-label">Version:</span>
+                            <span class="info-value">1.0.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Build Date:</span>
+                            <span class="info-value" id="build-date">2024-01-01</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Browser:</span>
+                            <span class="info-value" id="browser-info">Unknown</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Screen Resolution:</span>
+                            <span class="info-value" id="screen-resolution">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>Support & Updates</h3>
+                    
+                    <div class="support-actions">
+                        <button class="btn btn-primary" id="check-updates">
+                            <span class="material-symbols-rounded">system_update</span>
+                            Check for Updates
+                        </button>
+                        <button class="btn btn-secondary" id="export-logs">
+                            <span class="material-symbols-rounded">description</span>
+                            Export Logs
+                        </button>
+                        <button class="btn btn-secondary" id="reset-settings">
+                            <span class="material-symbols-rounded">restore</span>
+                            Reset Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

@@ -1,0 +1,43 @@
+<!-- ====== HEADER COMPONENT ====== -->
+<header class="header" id="main-header">
+    <div class="header-content">
+        <!-- Logo y Título -->
+        <div class="header-logo">
+            <span class="material-symbols-rounded">video_library</span>
+            <h1>DXPR</h1>
+        </div>
+        
+        <!-- Vista Previa OBS -->
+        <div class="obs-preview" id="obs-preview">
+            <div class="preview-placeholder">
+                <span class="material-symbols-rounded">videocam_off</span>
+                <span>Anteprima Offline</span>
+            </div>
+        </div>
+        
+        <!-- Controles de Stream -->
+        <div class="stream-controls">
+            <button id="btn-stream" class="btn btn-outline" disabled>
+                <span class="material-symbols-rounded">power</span>
+                <span class="btn-text">Inizia Stream</span>
+            </button>
+        </div>
+        
+        <!-- Estado de Conexión OBS -->
+        <div class="obs-status" id="obs-status">
+            <span class="material-symbols-rounded status-icon">wifi_off</span>
+            <span class="status-text">Offline</span>
+        </div>
+        
+        <!-- Estado de Conexión del Servidor -->
+        <div class="server-status">
+            <span id="connection-status" class="disconnected" title="Estado de conexión"></span>
+            <span class="status-text">Servidor</span>
+        </div>
+    </div>
+    
+    <!-- Barra de Escenas -->
+    <div class="scenes-bar" id="scenes-bar">
+        <div class="scenes-grid" id="scenes-grid"></div>
+    </div>
+</header>

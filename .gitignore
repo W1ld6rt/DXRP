@@ -1,0 +1,108 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Flask
+instance/
+.webassets-cache
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+
+# Electron
+dist/
+out/
+*.log
+
+# OBS Studio
+*.obs
+*.obs-journal
+
+# Logs
+*.log
+app.log
+client_errors.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Media files (opcional - descomenta si no quieres subir archivos de media)
+# *.mp4
+# *.avi
+# *.mov
+# *.wmv
+# *.flv
+# *.mkv
+
+# Bible files (opcional - descomenta si no quieres subir archivos de biblia)
+# *.xml
+
+# Project files (opcional - descomenta si no quieres subir archivos .pro)
+# *.pro
+
+# PyInstaller
+*.spec
+
+# Heroku
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

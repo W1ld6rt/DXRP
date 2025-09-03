@@ -1,0 +1,63 @@
+<!-- ====== NAVIGATION COMPONENT ====== -->
+<nav class="bottom-navigation" id="main-navigation">
+    <div class="nav-container">
+        <!-- Navegación Principal -->
+        <div class="nav-section">
+            <button class="nav-btn active" data-view="bible" title="Bibbia">
+                <span class="material-symbols-rounded">menu_book</span>
+                <span class="nav-text">Bibbia</span>
+            </button>
+            <button class="nav-btn" data-view="songs" title="Canti">
+                <span class="material-symbols-rounded">queue_music</span>
+                <span class="nav-text">Canti</span>
+            </button>
+            <button class="nav-btn" data-view="lower-third" title="Lower-Third">
+                <span class="material-symbols-rounded">subtitles</span>
+                <span class="nav-text">Lower-Third</span>
+            </button>
+            <button class="nav-btn" data-view="settings" title="Impostazioni">
+                <span class="material-symbols-rounded">settings</span>
+                <span class="nav-text">Impostazioni</span>
+            </button>
+        </div>
+        
+        <!-- Controles de Vista -->
+        <div class="view-controls" id="view-controls">
+            <!-- Controles de Bible -->
+            <div class="control-group active" data-view="bible">
+                <button class="control-btn" id="btn-prev" title="Versetto precedente">
+                    <span class="material-symbols-rounded">chevron_left</span>
+                </button>
+                <button class="control-btn primary" id="btn-project" title="Proietta">
+                    <span class="material-symbols-rounded">visibility</span>
+                    <span class="btn-text">Proietta</span>
+                </button>
+                <button class="control-btn" id="btn-next" title="Versetto successivo">
+                    <span class="material-symbols-rounded">chevron_right</span>
+                </button>
+            </div>
+            
+            <!-- Controles de Songs -->
+            <div class="control-group" data-view="songs">
+                <button class="control-btn" id="btn-prev-song" title="Slide precedente">
+                    <span class="material-symbols-rounded">chevron_left</span>
+                </button>
+                <button class="control-btn primary" id="btn-project-song" title="Proietta Canto">
+                    <span class="material-symbols-rounded">visibility</span>
+                    <span class="btn-text">Proietta Canto</span>
+                </button>
+                <button class="control-btn" id="btn-next-song" title="Slide successiva">
+                    <span class="material-symbols-rounded">chevron_right</span>
+                </button>
+            </div>
+            
+            <!-- Controles de Lower-Third -->
+            <div class="control-group" data-view="lower-third">
+                <button class="control-btn primary" id="btn-project-lt" title="Proietta Lower-Third">
+                    <span class="material-symbols-rounded">visibility</span>
+                    <span class="btn-text">Proietta</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

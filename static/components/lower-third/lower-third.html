@@ -1,0 +1,242 @@
+<!-- ========== LOWER THIRD COMPONENT ========== -->
+<div class="lower-third-component">
+    <!-- Control Panel -->
+    <div class="lower-third-controls">
+        <div class="controls-header">
+            <h2>Lower Third Controls</h2>
+            <div class="header-actions">
+                <button class="btn btn-secondary" id="clear-lower-third-btn">
+                    <span class="material-symbols-rounded">clear</span>
+                    Clear
+                </button>
+                <button class="btn btn-primary" id="project-lower-third-btn">
+                    <span class="material-symbols-rounded">cast</span>
+                    Project
+                </button>
+            </div>
+        </div>
+        
+        <!-- Text Input Section -->
+        <div class="input-section">
+            <div class="form-group">
+                <label for="lower-third-text">Main Text</label>
+                <input type="text" id="lower-third-text" placeholder="Enter main text..." maxlength="50">
+                <div class="char-count">
+                    <span id="text-char-count">0</span>/50
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="lower-third-description">Description</label>
+                <input type="text" id="lower-third-description" placeholder="Enter description..." maxlength="100">
+                <div class="char-count">
+                    <span id="description-char-count">0</span>/100
+                </div>
+            </div>
+        </div>
+        
+        <!-- Style Controls -->
+        <div class="style-section">
+            <h3>Style Options</h3>
+            
+            <div class="style-grid">
+                <!-- Color Theme -->
+                <div class="style-group">
+                    <label>Color Theme</label>
+                    <div class="color-themes">
+                        <button class="color-theme-btn active" data-theme="default" title="Default">
+                            <div class="color-preview default-theme"></div>
+                            <span>Default</span>
+                        </button>
+                        <button class="color-theme-btn" data-theme="blue" title="Blue">
+                            <div class="color-preview blue-theme"></div>
+                            <span>Blue</span>
+                        </button>
+                        <button class="color-theme-btn" data-theme="green" title="Green">
+                            <div class="color-preview green-theme"></div>
+                            <span>Green</span>
+                        </button>
+                        <button class="color-theme-btn" data-theme="red" title="Red">
+                            <div class="color-preview red-theme"></div>
+                            <span>Red</span>
+                        </button>
+                        <button class="color-theme-btn" data-theme="purple" title="Purple">
+                            <div class="color-preview purple-theme"></div>
+                            <span>Purple</span>
+                        </button>
+                        <button class="color-theme-btn" data-theme="orange" title="Orange">
+                            <div class="color-preview orange-theme"></div>
+                            <span>Orange</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Animation -->
+                <div class="style-group">
+                    <label>Animation</label>
+                    <div class="animation-options">
+                        <button class="animation-btn active" data-animation="slide-up" title="Slide Up">
+                            <span class="material-symbols-rounded">keyboard_arrow_up</span>
+                            <span>Slide Up</span>
+                        </button>
+                        <button class="animation-btn" data-animation="fade-in" title="Fade In">
+                            <span class="material-symbols-rounded">visibility</span>
+                            <span>Fade In</span>
+                        </button>
+                        <button class="animation-btn" data-animation="slide-left" title="Slide Left">
+                            <span class="material-symbols-rounded">keyboard_arrow_left</span>
+                            <span>Slide Left</span>
+                        </button>
+                        <button class="animation-btn" data-animation="none" title="None">
+                            <span class="material-symbols-rounded">block</span>
+                            <span>None</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Duration -->
+                <div class="style-group">
+                    <label for="lower-third-duration">Display Duration (seconds)</label>
+                    <div class="duration-control">
+                        <input type="range" id="lower-third-duration" min="3" max="30" value="10" step="1">
+                        <span id="duration-value">10s</span>
+                    </div>
+                </div>
+                
+                <!-- Position -->
+                <div class="style-group">
+                    <label>Position</label>
+                    <div class="position-options">
+                        <button class="position-btn active" data-position="bottom-left" title="Bottom Left">
+                            <span class="material-symbols-rounded">format_align_left</span>
+                            <span>Bottom Left</span>
+                        </button>
+                        <button class="position-btn" data-position="bottom-center" title="Bottom Center">
+                            <span class="material-symbols-rounded">format_align_center</span>
+                            <span>Bottom Center</span>
+                        </button>
+                        <button class="position-btn" data-position="bottom-right" title="Bottom Right">
+                            <span class="material-symbols-rounded">format_align_right</span>
+                            <span>Bottom Right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Templates -->
+        <div class="templates-section">
+            <h3>Quick Templates</h3>
+            <div class="template-buttons">
+                <button class="template-btn" data-template="speaker">
+                    <span class="material-symbols-rounded">person</span>
+                    Speaker
+                </button>
+                <button class="template-btn" data-template="worship-leader">
+                    <span class="material-symbols-rounded">music_note</span>
+                    Worship Leader
+                </button>
+                <button class="template-btn" data-template="announcement">
+                    <span class="material-symbols-rounded">campaign</span>
+                    Announcement
+                </button>
+                <button class="template-btn" data-template="event">
+                    <span class="material-symbols-rounded">event</span>
+                    Event
+                </button>
+                <button class="template-btn" data-template="custom">
+                    <span class="material-symbols-rounded">edit</span>
+                    Custom
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Preview Panel -->
+    <div class="lower-third-preview">
+        <div class="preview-header">
+            <h3>Live Preview</h3>
+            <button class="btn btn-secondary" id="toggle-preview-btn">
+                <span class="material-symbols-rounded">visibility</span>
+                Toggle Preview
+            </button>
+        </div>
+        
+        <div class="preview-container" id="preview-container">
+            <div class="lower-third-display" id="lower-third-display">
+                <div class="lower-third-content">
+                    <div class="main-text" id="preview-main-text">Enter main text here</div>
+                    <div class="description" id="preview-description">Enter description here</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Preview Controls -->
+        <div class="preview-controls">
+            <button class="preview-control-btn" id="preview-show-btn">
+                <span class="material-symbols-rounded">play_arrow</span>
+                Show
+            </button>
+            <button class="preview-control-btn" id="preview-hide-btn">
+                <span class="material-symbols-rounded">stop</span>
+                Hide
+            </button>
+            <button class="preview-control-btn" id="preview-reset-btn">
+                <span class="material-symbols-rounded">refresh</span>
+                Reset
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ========== TEMPLATE MODAL ========== -->
+<div class="modal" id="template-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Lower Third Template</h2>
+            <button class="modal-close" id="close-template-modal">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="template-form">
+                <div class="form-group">
+                    <label for="template-main-text">Main Text</label>
+                    <input type="text" id="template-main-text" required>
+                </div>
+                <div class="form-group">
+                    <label for="template-description">Description</label>
+                    <input type="text" id="template-description">
+                </div>
+                <div class="form-group">
+                    <label for="template-theme">Color Theme</label>
+                    <select id="template-theme">
+                        <option value="default">Default</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="red">Red</option>
+                        <option value="purple">Purple</option>
+                        <option value="orange">Orange</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="template-animation">Animation</label>
+                    <select id="template-animation">
+                        <option value="slide-up">Slide Up</option>
+                        <option value="fade-in">Fade In</option>
+                        <option value="slide-left">Slide Left</option>
+                        <option value="none">None</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="template-duration">Duration (seconds)</label>
+                    <input type="number" id="template-duration" min="3" max="30" value="10">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-template-modal">Cancel</button>
+            <button class="btn btn-primary" id="apply-template-modal">Apply Template</button>
+        </div>
+    </div>
+</div>

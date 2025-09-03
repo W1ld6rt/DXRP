@@ -1,0 +1,341 @@
+/* ====== MAIN CONTENT STYLES ====== */
+
+.main-content {
+  padding: var(--space-lg);
+  padding-bottom: calc(20px + var(--space-lg)); /* Space for navigation */
+  min-height: calc(100vh - 120px); /* Account for header */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* View Containers */
+.bible-view,
+.songs-view,
+.lower-third-view,
+.settings-view {
+  display: none;
+  animation: fadeIn 0.3s ease-out;
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.bible-view.active,
+.songs-view.active,
+.lower-third-view.active,
+.settings-view.active {
+  display: block;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Empty States */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  text-align: center;
+  color: var(--md-on-surface-variant);
+  min-height: 40px;
+}
+
+.empty-state .material-symbols-rounded {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+  opacity: 0.5;
+}
+
+.empty-state h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--md-on-surface);
+}
+
+.empty-state p {
+  font-size: 1rem;
+  opacity: 0.8;
+  max-width: 400px;
+}
+
+/* Loading States */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  min-height: 200px;
+}
+
+.loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid var(--md-outline-variant);
+  border-top: 2px solid var(--md-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error States */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  text-align: center;
+  color: var(--md-error);
+  min-height: 200px;
+}
+
+.error-state .material-symbols-rounded {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+}
+
+.error-state h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.error-state p {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  max-width: 400px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-content {
+    padding: var(--space-md);
+    padding-bottom: calc(120px + var(--space-md));
+  }
+  
+  .empty-state {
+    padding: var(--space-xl);
+    min-height: 30px;
+  }
+  
+  .empty-state .material-symbols-rounded {
+    font-size: 3rem;
+  }
+  
+  .empty-state h1 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    padding: var(--space-sm);
+    padding-bottom: calc(140px + var(--space-sm));
+  }
+  
+  .empty-state {
+    padding: var(--space-lg);
+    min-height: 25px;
+  }
+  
+  .empty-state .material-symbols-rounded {
+    font-size: 2.5rem;
+  }
+  
+  .empty-state h1 {
+    font-size: 1.1rem;
+  }
+  
+  /* Mejoras para componentes de navegación */
+  .view-container {
+    margin-bottom: var(--space-sm);
+  }
+  
+  .bible-view,
+  .songs-view,
+  .lower-third-view,
+  .settings-view {
+    padding: var(--space-sm);
+  }
+  
+  /* Mejoras para tarjetas y contenedores */
+  .card {
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+  
+  /* Mejoras para elementos interactivos */
+  .interactive-element {
+    min-height: 44px; /* Tamaño mínimo para elementos táctiles */
+  }
+}
+
+/* Mejoras para dispositivos muy pequeños */
+@media (max-width: 380px) {
+  .main-content {
+    padding: var(--space-xs);
+    padding-bottom: calc(140px + var(--space-xs));
+  }
+  
+  .card {
+    padding: var(--space-xs);
+    margin-bottom: var(--space-xs);
+  }
+  
+  .btn {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+  
+  .form-field {
+    margin-bottom: var(--space-xs);
+  }
+  
+  .form-label {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  
+  /* Ajustar espaciado en elementos de navegación */
+  .nav-btn {
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+  }
+}
+  
+  .empty-state p {
+    font-size: 0.875rem;
+  
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Utility Classes for Content */
+.content-section {
+  margin-bottom: var(--space-xl);
+}
+
+.content-section:last-child {
+  margin-bottom: 0;
+}
+
+.content-header {
+  margin-bottom: var(--space-lg);
+}
+
+.content-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--md-on-surface);
+  margin-bottom: var(--space-sm);
+}
+
+.content-subtitle {
+  font-size: 1rem;
+  color: var(--md-on-surface-variant);
+  line-height: 1.5;
+}
+
+.content-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.content-card {
+  background-color: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.content-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.content-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.content-card-icon {
+  color: var(--md-primary);
+  font-size: 1.5rem;
+}
+
+.content-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--md-on-surface);
+}
+
+.content-card-body {
+  color: var(--md-on-surface-variant);
+  line-height: 1.6;
+}
+
+/* Focus Management */
+.focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .main-content {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .empty-state,
+  .loading,
+  .error-state {
+    display: none;
+  }
+}

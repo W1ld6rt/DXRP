@@ -1,0 +1,80 @@
+{
+  "name": "DXPR - Control de Presentaciones",
+  "short_name": "DXPR",
+  "description": "Control avanzado de presentaciones bíblicas y multimedia con integración OBS",
+  "start_url": "/control",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#6750a4",
+  "orientation": "any",
+  "categories": ["productivity", "multimedia", "utilities"],
+  "lang": "es",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Biblia",
+      "short_name": "Biblia",
+      "description": "Acceso directo a la sección de versículos bíblicos",
+      "url": "/control#bible",
+      "icons": [
+        {
+          "src": "/static/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Canciones",
+      "short_name": "Canciones",
+      "description": "Acceso directo a la sección de canciones",
+      "url": "/control#songs",
+      "icons": [
+        {
+          "src": "/static/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Configuración",
+      "short_name": "Config",
+      "description": "Acceso directo a la configuración",
+      "url": "/control#settings",
+      "icons": [
+        {
+          "src": "/static/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [],
+  "related_applications": [],
+  "protocol_handlers": [],
+  "file_handlers": [],
+  "share_target": {
+    "action": "/control",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

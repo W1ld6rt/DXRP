@@ -1,0 +1,241 @@
+/* ====== NAVIGATION COMPONENT STYLES ====== */
+
+.bottom-navigation {
+  background-color: var(--md-surface);
+  border-top: 1px solid var(--md-outline-variant);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-fixed);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(8px);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+/* Main Navigation */
+.nav-section {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  background: none;
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--md-on-surface-variant);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 4rem;
+  min-height: 3rem;
+  position: relative;
+}
+
+.nav-btn:hover {
+  background-color: var(--md-surface-variant);
+  color: var(--md-on-surface);
+  transform: translateY(-2px);
+}
+
+.nav-btn.active {
+  color: var(--md-primary);
+  background-color: var(--md-primary-container);
+}
+
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--md-primary);
+  border-radius: 50%;
+}
+
+.nav-btn .material-symbols-rounded {
+  font-size: 1.5rem;
+  font-variation-settings: 'FILL' 0;
+}
+
+.nav-btn.active .material-symbols-rounded {
+  font-variation-settings: 'FILL' 1;
+}
+
+.nav-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* View Controls */
+.view-controls {
+  display: flex;
+  align-items: center;
+}
+
+.control-group {
+  display: none;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.control-group.active {
+  display: flex;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--md-surface-variant);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-lg);
+  color: var(--md-on-surface);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 0.875rem;
+  font-weight: 500;
+  min-height: 2.5rem;
+}
+
+.control-btn:hover {
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  border-color: var(--md-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.control-btn.primary {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  border-color: var(--md-primary);
+}
+
+.control-btn.primary:hover {
+  background-color: color-mix(in srgb, var(--md-primary) 90%, black);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.control-btn .material-symbols-rounded {
+  font-size: 1.25rem;
+}
+
+.control-btn .btn-text {
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: var(--space-xs) var(--space-md);
+    gap: var(--space-md);
+  }
+  
+  .nav-btn {
+    min-width: 3.5rem;
+    min-height: 2.5rem;
+    padding: var(--space-xs);
+  }
+  
+  .nav-btn .material-symbols-rounded {
+    font-size: 1.25rem;
+  }
+  
+  .nav-text {
+    font-size: 0.625rem;
+  }
+  
+  .control-btn {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.75rem;
+    min-height: 2rem;
+  }
+  
+  .control-btn .material-symbols-rounded {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-container {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  
+  .nav-section {
+    width: 100%;
+    justify-content: space-around;
+  }
+  
+  .view-controls {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .control-group {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .control-btn .btn-text {
+    display: none;
+  }
+  
+  .control-btn {
+    min-width: 2.5rem;
+    justify-content: center;
+  }
+}
+
+/* Animation for view transitions */
+.nav-btn {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover effects for better UX */
+.nav-btn:hover .material-symbols-rounded {
+  transform: scale(1.1);
+  transition: transform var(--transition-fast);
+}
+
+.control-btn:hover .material-symbols-rounded {
+  transform: scale(1.1);
+  transition: transform var(--transition-fast);
+}

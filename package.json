@@ -1,0 +1,203 @@
+{
+  "name": "dxpr-desktop",
+  "version": "1.0.0",
+  "description": "DXPR - Dexter Presenter Remote - Sistema de control para presentaciones en vivo",
+  "main": "electron-main.js",
+  "homepage": ".",
+  "author": {
+    "name": "DXPR Team",
+    "email": "contact@dxpr.app"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "electron": "electron .",
+    "electron-dev": "cross-env NODE_ENV=development electron .",
+    "start": "concurrently \"npm run start-flask\" \"wait-on http://localhost:5000 && npm run electron-dev\"",
+    "start-flask": "python app.py",
+    "build": "npm run build-flask && npm run build-electron",
+    "build-flask": "pyinstaller --onefile --windowed app.py",
+    "build-electron": "electron-builder",
+    "build-win": "electron-builder --win",
+    "build-mac": "electron-builder --mac",
+    "build-linux": "electron-builder --linux",
+    "dist": "npm run build",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "electron-updater": "^6.1.7",
+    "electron-is-dev": "^2.0.0",
+    "electron-log": "^5.0.1",
+    "electron-store": "^8.1.0"
+  },
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.56.0"
+  },
+  "build": {
+    "appId": "com.dxpr.desktop",
+    "productName": "DXPR - Dexter Presenter Remote",
+    "copyright": "Copyright © 2024 DXPR Team",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron-main.js",
+      "electron-preload.js",
+      "app.py",
+      "config.py",
+      "requirements.txt",
+      "static/**/*",
+      "templates/**/*",
+      "bibles/**/*",
+      "projects/**/*",
+      "node_modules/**/*",
+      "!node_modules/.cache/**/*",
+      "!**/*.map",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+    ],
+    "extraResources": [
+      {
+        "from": "python-dist/",
+        "to": "python/",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "static/icon-512.png",
+      "publisherName": "DXPR Team",
+      "verifyUpdateCodeSignature": false
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "icon": "static/icon-512.png",
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64"]
+        },
+        {
+          "target": "rpm",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "static/icon-512.png",
+      "category": "Office",
+      "synopsis": "Sistema de control para presentaciones en vivo",
+      "description": "DXPR es una aplicación de escritorio para controlar presentaciones en vivo con OBS Studio, incluyendo gestión de biblias, canciones y elementos gráficos."
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DXPR",
+      "include": "build/installer.nsh",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "dmg": {
+      "title": "${productName} ${version}",
+      "icon": "static/icon-512.png",
+      "iconSize": 100,
+      "contents": [
+        {
+          "x": 380,
+          "y": 280,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 110,
+          "y": 280,
+          "type": "file"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 380
+      }
+    },
+    "appImage": {
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "deb": {
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "depends": ["python3", "python3-pip"]
+    },
+    "rpm": {
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "depends": ["python3", "python3-pip"]
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "your-username",
+      "repo": "dxpr-desktop"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/dxpr-desktop.git"
+  },
+  "keywords": [
+    "presentation",
+    "obs",
+    "streaming",
+    "bible",
+    "church",
+    "electron",
+    "desktop",
+    "cross-platform"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

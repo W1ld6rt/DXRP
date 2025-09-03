@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <title>DXPR - Proyección Lower-Third</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+    <style>
+        /* ====== DXPR LOWER-THIRD PROJECTION STYLES ====== */
+        :root {
+            --projection-bg: transparent;
+            --projection-text: #ffffff;
+            --projection-text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --projection-accent: #3b82f6;
+            --projection-muted: rgba(255, 255, 255, 0.8);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--projection-bg);
+            color: var(--projection-text);
+        }
+        
+        .projection-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100vh;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .lower-third {
+            background: var(--projection-accent);
+            border-radius: 1rem;
+            padding: 2rem 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 90vw;
+            width: 100%;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .lower-third.show {
+            transform: translateY(0);
+        }
+        
+        .lower-third-name {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 700;
+            color: var(--projection-text);
+            text-shadow: var(--projection-text-shadow);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        
+        .lower-third-description {
+            font-size: clamp(1rem, 4vw, 2rem);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: var(--projection-text-shadow);
+            line-height: 1.4;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: var(--projection-muted);
+            text-align: center;
+        }
+        
+        .empty-state .material-symbols-rounded {
+            font-size: clamp(4rem, 15vw, 8rem);
+            margin-bottom: 2rem;
+            opacity: 0.5;
+        }
+        
+        .empty-state h1 {
+            font-size: clamp(1.5rem, 6vw, 3rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .empty-state p {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            opacity: 0.8;
+        }
+        
+        /* Animation for lower-third appearance */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideOutDown {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+        }
+        
+        .lower-third.enter {
+            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        .lower-third.exit {
+            animation: slideOutDown 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .projection-container {
+                padding: 1rem;
+            }
+            
+            .lower-third {
+                padding: 1.5rem 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .projection-container {
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .lower-third {
+                transform: translateY(0);
+                box-shadow: none;
+                border: 2px solid #000;
+            }
+        }
+        
+        /* Custom lower-third styles */
+        .lower-third.style-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .lower-third.style-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .lower-third.style-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .lower-third.style-4 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .lower-third.style-5 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="projection-container">
+        <div class="lower-third" id="lower-third">
+            <div class="lower-third-name" id="lt-name">Nombre</div>
+            <div class="lower-third-description" id="lt-description">Descripción</div>
+        </div>
+    </div>
+
+    <script>
+        // ====== LOWER-THIRD PROJECTION SCRIPT ======
+        
+        const socket = io();
+        const lowerThird = document.getElementById('lower-third');
+        const ltName = document.getElementById('lt-name');
+        const ltDescription = document.getElementById('lt-description');
+        
+        let currentLowerThird = null;
+        let isVisible = false;
+        
+        // Socket event listeners
+        socket.on('lower_third', (data) => {
+            currentLowerThird = data;
+            displayLowerThird(data);
+        });
+        
+        socket.on('ui_set_display_hidden', (data) => {
+            if (data.hidden) {
+                hideLowerThird();
+            } else if (currentLowerThird) {
+                displayLowerThird(currentLowerThird);
+            }
+        });
+        
+        socket.on('ui_estado', (state) => {
+            if (state.display_hidden) {
+                hideLowerThird();
+            }
+        });
+        
+        // Request initial state
+        socket.emit('ui_pedir_estado');
+        
+        function displayLowerThird(data) {
+            if (!data || !data.name) {
+                hideLowerThird();
+                return;
+            }
+            
+            // Update content
+            ltName.textContent = data.name;
+            ltDescription.textContent = data.description || '';
+            
+            // Update background color if provided
+            if (data.color) {
+                lowerThird.style.background = data.color;
+            } else {
+                // Use default gradient
+                lowerThird.style.background = 'var(--projection-accent)';
+            }
+            
+            // Show lower-third with animation
+            if (!isVisible) {
+                lowerThird.classList.remove('exit');
+                lowerThird.classList.add('enter');
+                isVisible = true;
+            }
+        }
+        
+        function hideLowerThird() {
+            if (isVisible) {
+                lowerThird.classList.remove('enter');
+                lowerThird.classList.add('exit');
+                
+                // Remove animation classes after animation completes
+                setTimeout(() => {
+                    lowerThird.classList.remove('exit');
+                    isVisible = false;
+                }, 400);
+            }
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Recalculate positioning if needed
+        });
+        
+        // Handle fullscreen
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+        
+        // Auto-hide cursor after inactivity
+        let cursorTimeout;
+        function hideCursor() {
+            document.body.style.cursor = 'none';
+        }
+        
+        function showCursor() {
+            document.body.style.cursor = 'default';
+            clearTimeout(cursorTimeout);
+            cursorTimeout = setTimeout(hideCursor, 3000);
+        }
+        
+        document.addEventListener('mousemove', showCursor);
+        document.addEventListener('click', showCursor);
+        
+        // Initialize
+        hideCursor();
+        
+        // Test function for development
+        function testLowerThird() {
+            displayLowerThird({
+                name: 'Juan Pérez',
+                description: 'Pastor Principal',
+                color: '#3b82f6'
+            });
+        }
+        
+        // Expose test function globally for development
+        window.testLowerThird = testLowerThird;
+    </script>
+</body>
+</html>

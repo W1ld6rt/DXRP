@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Test Botones DXPR</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .success { background: #4CAF50; color: white; }
+        .error { background: #f44336; color: white; }
+        .info { background: #2196F3; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test de Botones DXPR</h1>
+    
+    <div class="test-section">
+        <h2>Test de Función showToast</h2>
+        <button onclick="testShowToast()" class="info">Probar showToast</button>
+        <div id="toast-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test de Componentes</h2>
+        <button onclick="testComponents()" class="info">Verificar Componentes</button>
+        <div id="components-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test de Eventos</h2>
+        <button onclick="testEvents()" class="info">Probar Eventos</button>
+        <div id="events-result"></div>
+    </div>
+    
+    <script>
+        // Función de prueba para showToast
+        function testShowToast() {
+            const result = document.getElementById('toast-result');
+            
+            if (window.Utils && window.Utils.showToast) {
+                window.Utils.showToast('¡Test exitoso!', 'success');
+                result.innerHTML = '<p style="color: green;">✅ showToast funciona correctamente</p>';
+            } else {
+                result.innerHTML = '<p style="color: red;">❌ showToast no está disponible</p>';
+            }
+        }
+        
+        // Función para verificar componentes
+        function testComponents() {
+            const result = document.getElementById('components-result');
+            const components = [
+                'HeaderComponent',
+                'NavigationComponent',
+                'BibleComponent',
+                'SongsComponent',
+                'LowerThirdComponent',
+                'SettingsComponent'
+            ];
+            
+            let html = '<h3>Estado de Componentes:</h3>';
+            components.forEach(componentName => {
+                const component = window[componentName];
+                const status = component ? '✅ Disponible' : '❌ No disponible';
+                const color = component ? 'green' : 'red';
+                html += `<p style="color: ${color};">${componentName}: ${status}</p>`;
+            });
+            
+            result.innerHTML = html;
+        }
+        
+        // Función para probar eventos
+        function testEvents() {
+            const result = document.getElementById('events-result');
+            
+            // Verificar si dxprApp está disponible
+            if (window.dxprApp) {
+                result.innerHTML = '<p style="color: green;">✅ dxprApp está disponible</p>';
+                
+                if (window.dxprApp.components) {
+                    result.innerHTML += '<p style="color: green;">✅ Componentes están disponibles</p>';
+                    
+                    Object.entries(window.dxprApp.components).forEach(([name, component]) => {
+                        const status = component ? '✅ Inicializado' : '❌ Falló';
+                        const color = component ? 'green' : 'red';
+                        result.innerHTML += `<p style="color: ${color};">${name}: ${status}</p>`;
+                    });
+                } else {
+                    result.innerHTML += '<p style="color: red;">❌ Componentes no están disponibles</p>';
+                }
+            } else {
+                result.innerHTML = '<p style="color: red;">❌ dxprApp no está disponible</p>';
+            }
+        }
+        
+        // Auto-ejecutar tests al cargar
+        window.addEventListener('load', () => {
+            console.log('🧪 Tests de DXPR cargados');
+            setTimeout(() => {
+                testComponents();
+                testEvents();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

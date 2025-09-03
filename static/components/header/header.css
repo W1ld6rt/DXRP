@@ -1,0 +1,211 @@
+/* ====== HEADER COMPONENT STYLES ====== */
+
+.header {
+  background-color: var(--md-surface);
+  border-bottom: 1px solid var(--md-outline-variant);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: var(--space-lg);
+}
+
+/* Logo */
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.header-logo .material-symbols-rounded {
+  font-size: 2rem;
+  color: var(--md-primary);
+}
+
+.header-logo h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--md-on-surface);
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+/* OBS Preview */
+.obs-preview {
+  flex: 1;
+  max-width: 300px;
+  height: 3rem;
+  background-color: var(--md-surface-variant);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-placeholder {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--md-on-surface-variant);
+  font-size: 0.875rem;
+}
+
+.preview-placeholder .material-symbols-rounded {
+  font-size: 1.25rem;
+}
+
+/* Stream Controls */
+.stream-controls {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+/* OBS Status */
+.obs-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--md-surface-variant);
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.obs-status.online {
+  background-color: var(--accent-green);
+  color: white;
+}
+
+.obs-status.offline {
+  background-color: var(--accent-red);
+  color: white;
+}
+
+.status-icon {
+  font-size: 1rem;
+}
+
+/* Server Status */
+.server-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--md-surface-variant);
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.server-status .status-text {
+  margin-left: var(--space-xs);
+}
+
+/* Scenes Bar */
+.scenes-bar {
+  background-color: var(--md-surface-variant);
+  border-top: 1px solid var(--md-outline-variant);
+  padding: var(--space-sm) var(--space-lg);
+  overflow-x: auto;
+}
+
+.scenes-grid {
+  display: flex;
+  gap: var(--space-sm);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.scenes-grid .btn {
+  flex-shrink: 0;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.75rem;
+  border-radius: var(--radius-full);
+  background-color: var(--md-surface);
+  color: var(--md-on-surface);
+  border: 1px solid var(--md-outline-variant);
+  transition: all var(--transition-fast);
+}
+
+.scenes-grid .btn:hover {
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  border-color: var(--md-primary);
+}
+
+.scenes-grid .btn.active {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  border-color: var(--md-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-md);
+  }
+  
+  .header-logo h1 {
+    font-size: 1.25rem;
+  }
+  
+  .obs-preview {
+    max-width: 200px;
+    height: 2.5rem;
+  }
+  
+  .preview-placeholder {
+    font-size: 0.75rem;
+  }
+  
+  .obs-status {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.75rem;
+  }
+  
+  .scenes-bar {
+    padding: var(--space-xs) var(--space-md);
+  }
+  
+  .scenes-grid .btn {
+    padding: var(--space-xs);
+    font-size: 0.625rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-content {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  
+  .obs-preview {
+    order: 3;
+    max-width: 100%;
+    margin-top: var(--space-sm);
+  }
+  
+  .stream-controls {
+    order: 2;
+  }
+  
+  .obs-status {
+    order: 1;
+  }
+}
