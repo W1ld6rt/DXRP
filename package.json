@@ -34,7 +34,7 @@
     "electron-store": "^8.1.0"
   },
   "devDependencies": {
-    "electron": "^28.1.0",
+    "electron": "^38.4.0",
     "electron-builder": "^24.9.1",
     "concurrently": "^8.2.2",
     "wait-on": "^7.2.0",
