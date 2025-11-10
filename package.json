@@ -37,7 +37,7 @@
     "electron": "^28.1.0",
     "electron-builder": "^24.9.1",
     "concurrently": "^8.2.2",
-    "wait-on": "^7.2.0",
+    "wait-on": "^9.0.3",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0"
   },
